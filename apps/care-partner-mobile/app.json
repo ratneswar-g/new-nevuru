@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Neravu Care Partner",
+    "slug": "neravu-care-partner",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#1769AA"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.neravu.carepartner"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1769AA"
+      },
+      "package": "com.neravu.carepartner"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "neravu-care-partner-mobile"
+      }
+    }
+  }
+}

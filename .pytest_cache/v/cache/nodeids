@@ -1,0 +1,21 @@
+[
+  "backend/tests/test_auth.py::TestFirebaseAuthentication::test_inactive_account_rejection",
+  "backend/tests/test_auth.py::TestFirebaseAuthentication::test_invalid_expired_token_rejected",
+  "backend/tests/test_auth.py::TestFirebaseAuthentication::test_no_client_controlled_role_escalation",
+  "backend/tests/test_auth.py::TestFirebaseAuthentication::test_unknown_uid_rejection",
+  "backend/tests/test_auth.py::TestFirebaseAuthentication::test_valid_token_resolves_user",
+  "backend/tests/test_auth.py::test_inactive_account_rejection",
+  "backend/tests/test_auth.py::test_invalid_expired_token_rejected",
+  "backend/tests/test_auth.py::test_no_client_controlled_role_escalation",
+  "backend/tests/test_auth.py::test_unknown_uid_rejection",
+  "backend/tests/test_auth.py::test_valid_token_resolves_user",
+  "backend/tests/test_models.py::TestBookingJourneyAndIncidentModels::test_booking_sole_assignment_ownership",
+  "backend/tests/test_models.py::TestCarePartnerAndVehicleModels::test_care_partner_profile_and_vehicle",
+  "backend/tests/test_models.py::TestCustomerAndHelperModels::test_customer_profile_creation",
+  "backend/tests/test_models.py::TestCustomerAndHelperModels::test_family_helper_granular_permissions",
+  "backend/tests/test_models.py::TestDecoupledAuditLog::test_audit_log_decoupled_entry",
+  "backend/tests/test_models.py::TestPricingAndRateCard::test_rate_card_versioning",
+  "backend/tests/test_models.py::TestUserModel::test_create_customer_user",
+  "backend/tests/test_models.py::TestUserModel::test_create_superuser",
+  "backend/tests/test_models.py::TestUserModel::test_phone_number_unique_constraint"
+]

@@ -1,0 +1,9 @@
+-r base.txt
+
+# Development and Testing Dependencies
+pytest>=8.1.1
+pytest-django>=4.8.0
+flake8>=7.0.0
+black>=24.3.0
+mypy>=1.9.0
+django-stubs>=4.2.7

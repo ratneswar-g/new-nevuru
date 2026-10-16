@@ -1,0 +1,14 @@
+{
+  "name": "@neravu/shared-types",
+  "version": "0.1.0",
+  "description": "Shared TypeScript types and contract definitions for Neravu platform",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

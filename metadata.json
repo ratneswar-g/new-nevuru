@@ -1,0 +1,6 @@
+{
+  "name": "Neravu - Medical Companion Platform",
+  "description": "Medical transportation and non-clinical patient accompaniment platform with public web, customer app, care partner app, and admin operations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,6 @@
+{
+  "summary": "Phase 0 Architecture and Product Blueprint for Neravu: defines platform scope, application architecture, authoritative Django/PostgreSQL backend rules, authentication decision gate, security criteria, and acceptance criteria for Phases 0 through 7.",
+  "updatedAt": "2026-10-16T04:35:32.295546890Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

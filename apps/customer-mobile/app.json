@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Neravu Customer",
+    "slug": "neravu-customer",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#1769AA"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.neravu.customer"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1769AA"
+      },
+      "package": "com.neravu.customer"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "neravu-customer-mobile"
+      }
+    }
+  }
+}

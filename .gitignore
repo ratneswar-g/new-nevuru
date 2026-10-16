@@ -1,0 +1,27 @@
+# Node & Workspaces
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example*
+
+# Python & Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+backend/venv/
+*.sqlite3
+
+# Expo / React Native
+.expo/
+web-build/
+*.tsbuildinfo
+
