@@ -53,7 +53,9 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         Fails closed if Firebase Admin is not initialized or configured.
         """
         from firebase_admin import auth
+        from apps.core.firebase import ensure_firebase_initialized
 
+        ensure_firebase_initialized()
         try:
             # Verify ID token with revocation check enabled
             decoded_token = auth.verify_id_token(token, check_revoked=True)
@@ -63,3 +65,21 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
 
     def authenticate_header(self, request):
         return 'Bearer realm="api"'
+
+
+def verify_request_identity(request):
+    """
+    Verify the Bearer Firebase ID token on a request WITHOUT requiring an
+    existing Neravu user. Used only by the registration endpoint.
+    """
+    auth_header = authentication.get_authorization_header(request).decode('utf-8')
+    parts = auth_header.split()
+    if len(parts) != 2 or parts[0].lower() != 'bearer':
+        raise AuthenticationFailed('Authentication credentials were not provided.')
+    try:
+        claims = FirebaseAuthentication()._verify_token(parts[1])
+    except Exception:
+        raise AuthenticationFailed('Invalid, expired, or revoked authentication token.')
+    if not (claims.get('uid') or claims.get('sub')):
+        raise AuthenticationFailed('Invalid token claims: missing UID.')
+    return claims

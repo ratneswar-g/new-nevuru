@@ -25,3 +25,5 @@ backend/venv/
 web-build/
 *.tsbuildinfo
 
+
+.pytest_cache/

@@ -2,6 +2,14 @@ import uuid
 from django.db import models
 
 
+class AppendOnlyQuerySet(models.QuerySet):
+    def update(self, **kwargs):
+        raise PermissionError('AuditLog is append-only.')
+
+    def delete(self):
+        raise PermissionError('AuditLog is append-only.')
+
+
 class AuditLog(models.Model):
     """
     Append-only immutable audit trail capturing state changes and administrative actions.
@@ -58,6 +66,16 @@ class AuditLog(models.Model):
         db_index=True,
         help_text='Exact timestamp when event was recorded'
     )
+
+    objects = AppendOnlyQuerySet.as_manager()
+
+    def save(self, *args, **kwargs):
+        if not self._state.adding:
+            raise PermissionError('AuditLog entries are immutable.')
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        raise PermissionError('AuditLog entries cannot be deleted.')
 
     class Meta:
         verbose_name = 'Audit Log'

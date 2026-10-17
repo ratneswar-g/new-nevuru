@@ -16,4 +16,10 @@ def health_check(request):
 urlpatterns = [
     path('health/', health_check, name='health-check'),
     path('admin/', admin.site.urls),
+    path('api/v1/', include('apps.users.urls')),
+    path('api/v1/', include('apps.pricing.urls')),
+    path('api/v1/', include('apps.bookings.urls')),
+    path('api/v1/', include('apps.companions.urls')),
+    path('api/v1/', include('apps.incidents.urls')),
+    path('api/v1/', include('apps.audit.urls')),
 ]

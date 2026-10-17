@@ -110,6 +110,13 @@ class Booking(models.Model):
         help_text='ISO currency code (fixed to INR)'
     )
 
+    pre_incident_status = models.CharField(
+        max_length=30,
+        blank=True,
+        help_text='Journey state held when an incident flagged the booking (used to resume)'
+    )
+    cancellation_reason = models.CharField(max_length=300, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 

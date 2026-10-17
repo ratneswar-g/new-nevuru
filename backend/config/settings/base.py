@@ -93,10 +93,26 @@ AUTH_USER_MODEL = 'users.User'
 
 # Django REST Framework Base Configuration
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'apps.users.authentication.FirebaseAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25,
     'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S%z',
+    'EXCEPTION_HANDLER': 'apps.core.exceptions.api_exception_handler',
+    'DEFAULT_THROTTLE_RATES': {
+        'otp_verify': '30/min',
+        'otp_issue': '20/min',
+        'register': '20/min',
+    },
 }
+
+# Neravu domain settings
+OTP_TTL_MINUTES = int(os.environ.get('OTP_TTL_MINUTES', '30'))
+OTP_MAX_ATTEMPTS = int(os.environ.get('OTP_MAX_ATTEMPTS', '3'))
