@@ -7,9 +7,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@neravu/shared-types': path.resolve(__dirname, '../../packages/shared-types/src/index.ts'),
+      '@neravu/api-client': path.resolve(__dirname, '../../packages/api-client/src/index.ts'),
     },
   },
-  server: {
-    port: 5173,
-  },
+  server: { port: 5173 },
 });

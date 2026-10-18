@@ -178,6 +178,18 @@ class TestPricing:
         assert c.get(f'{API}/bookings/{bid}/').json()['rate_card_version'] == rate_card.version
 
 
+class TestPublicPricing:
+    def test_unavailable_without_rate_card_then_published(self, rate_card=None):
+        r = make_client().get(f'{API}/public/pricing/')
+        assert r.status_code == 200 and r.json() == {'available': False}
+
+    def test_exposes_only_rate_card_fields(self, rate_card):
+        r = make_client().get(f'{API}/public/pricing/').json()
+        assert r['available'] is True and r['currency'] == 'INR'
+        assert set(r) == {'available', 'currency', 'version', 'base_fare', 'base_distance_km',
+                          'per_km_rate', 'per_minute_waiting_rate', 'mobility_tier_surcharges'}
+
+
 # --------------------------------------------------------------- booking basics
 
 class TestBookingCreation:
@@ -564,3 +576,17 @@ class TestSettingsSafety:
         rf = settings.REST_FRAMEWORK
         assert rf['DEFAULT_AUTHENTICATION_CLASSES'] == ['apps.users.authentication.FirebaseAuthentication']
         assert rf['DEFAULT_PERMISSION_CLASSES'] == ['rest_framework.permissions.IsAuthenticated']
+
+
+class TestProvisionAdmin:
+    def test_creates_admin_and_requires_unique_uid(self, db):
+        from django.core.management import call_command
+        from django.core.management.base import CommandError
+        call_command('provision_admin', '--phone', '+919777000001', '--firebase-uid', 'uid-a1')
+        u = User.objects.get(phone_number='+919777000001')
+        assert u.role == 'ADMIN' and u.firebase_uid == 'uid-a1' and u.is_staff
+        assert AuditLog.objects.filter(action='ADMIN_PROVISIONED', resource_id=u.id).exists()
+        with pytest.raises(CommandError):
+            call_command('provision_admin', '--phone', '+919777000002', '--firebase-uid', 'uid-a1')
+        with pytest.raises(CommandError):
+            call_command('provision_admin', '--phone', '9777000003', '--firebase-uid', 'uid-a3')

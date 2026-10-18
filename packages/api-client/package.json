@@ -1,0 +1,19 @@
+{
+  "name": "@neravu/api-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Typed fetch client for the Neravu Django REST API (web + React Native)",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test src/case.test.ts"
+  },
+  "dependencies": {
+    "@neravu/shared-types": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^22.14.0"
+  }
+}

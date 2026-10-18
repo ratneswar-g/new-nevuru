@@ -8,3 +8,4 @@ export * from './booking';
 export * from './pricing';
 export * from './partner';
 export * from './api';
+export * from './contracts';

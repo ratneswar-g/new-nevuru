@@ -1,61 +1,51 @@
-import type { CarePartnerStatus, BookingStatus } from '@neravu/shared-types';
+import { useState, type ReactElement } from 'react';
+import { AuthProvider, useAuth } from './auth';
+import { Audit } from './pages/Audit';
+import { Bookings } from './pages/Bookings';
+import { Dashboard } from './pages/Dashboard';
+import { Incidents } from './pages/Incidents';
+import { Login } from './pages/Login';
+import { Partners } from './pages/Partners';
+import { RateCards } from './pages/RateCards';
+import { API_BASE_URL } from './api';
 
-export default function App() {
-  const partnerStatuses: CarePartnerStatus[] = [
-    'PENDING_VERIFICATION',
-    'APPROVED',
-    'REJECTED',
-    'SUSPENDED',
-  ];
+const TABS: Record<string, () => ReactElement> = {
+  Overview: Dashboard, Bookings, 'Care Partners': Partners, Incidents, 'Rate cards': RateCards, Audit,
+};
 
-  const bookingStages: BookingStatus[] = [
-    'REQUESTED',
-    'QUOTED',
-    'CONFIRMED',
-    'ASSIGNED',
-    'ARRIVED',
-    'IN_TRANSIT_HOSPITAL',
-    'ACCOMPANIMENT',
-    'RETURN_TRANSIT',
-    'COMPLETED',
-    'CLOSED',
-  ];
+function Shell() {
+  const { state, signOut } = useAuth();
+  const [tab, setTab] = useState<keyof typeof TABS>('Overview');
 
+  if (state.status === 'unconfigured') {
+    return <main className="login"><h1>Neravu Operations</h1>
+      <p className="error">Firebase is not configured. Copy <code>environments/.env.example.admin</code> to <code>apps/admin-dashboard/.env.local</code> and fill in the VITE_FIREBASE_* values.</p></main>;
+  }
+  if (state.status === 'loading') return <main className="login"><p className="muted">Loading…</p></main>;
+  if (state.status === 'signed-out') return <Login />;
+  if (state.status === 'forbidden') {
+    return <main className="login"><h1>Access denied</h1><p className="error">{state.reason}</p>
+      <button onClick={signOut}>Sign out</button></main>;
+  }
+
+  const Page = TABS[tab];
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#EAF5FF', color: '#172B4D', fontFamily: 'system-ui, sans-serif' }}>
-      <header style={{ backgroundColor: '#172B4D', color: '#ffffff', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h1 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>Neravu Operations</h1>
-          <span style={{ fontSize: '0.75rem', color: '#62B6E8' }}>Admin Oversight & Partner Verification</span>
+    <div className="layout">
+      <aside>
+        <h1>Neravu</h1>
+        <nav>{Object.keys(TABS).map((t) => (
+          <button key={t} className={t === tab ? 'active' : ''} onClick={() => setTab(t)}>{t}</button>))}</nav>
+        <div className="foot">
+          <small>{state.me.fullName || state.me.phoneNumber}</small>
+          <small className="muted">API: {API_BASE_URL}</small>
+          <button onClick={signOut}>Sign out</button>
         </div>
-        <span style={{ fontSize: '0.75rem', backgroundColor: '#1769AA', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
-          Role: ADMIN
-        </span>
-      </header>
-
-      <main style={{ maxWidth: '1000px', margin: '2rem auto', padding: '0 1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-        <section style={{ backgroundColor: '#ffffff', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 2px 8px rgba(23, 43, 77, 0.08)' }}>
-          <h2 style={{ color: '#1769AA', fontSize: '1.125rem', marginTop: 0 }}>Care Partner Verification Lifecycle</h2>
-          <p style={{ fontSize: '0.875rem', color: '#42526E' }}>Admin KYC verification states enforced before duty assignment:</p>
-          <ul style={{ paddingLeft: '1.25rem', fontSize: '0.875rem' }}>
-            {partnerStatuses.map((status) => (
-              <li key={status} style={{ margin: '0.375rem 0' }}><code>{status}</code></li>
-            ))}
-          </ul>
-        </section>
-
-        <section style={{ backgroundColor: '#ffffff', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 2px 8px rgba(23, 43, 77, 0.08)' }}>
-          <h2 style={{ color: '#1769AA', fontSize: '1.125rem', marginTop: 0 }}>Journey State Supervision</h2>
-          <p style={{ fontSize: '0.875rem', color: '#42526E' }}>Authoritative state transitions monitored by dispatch:</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
-            {bookingStages.map((stage) => (
-              <span key={stage} style={{ fontSize: '0.75rem', backgroundColor: '#EAF5FF', color: '#1769AA', padding: '0.25rem 0.5rem', borderRadius: '4px', border: '1px solid #62B6E8' }}>
-                {stage}
-              </span>
-            ))}
-          </div>
-        </section>
-      </main>
+      </aside>
+      <main><Page /></main>
     </div>
   );
+}
+
+export default function App() {
+  return <AuthProvider><Shell /></AuthProvider>;
 }

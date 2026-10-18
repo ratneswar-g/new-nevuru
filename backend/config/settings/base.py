@@ -110,6 +110,7 @@ REST_FRAMEWORK = {
         'otp_verify': '30/min',
         'otp_issue': '20/min',
         'register': '20/min',
+        'public': '120/min',
     },
 }
 
