@@ -27,3 +27,10 @@ web-build/
 
 
 .pytest_cache/
+
+# Firebase / service credentials (never commit)
+google-services.json
+GoogleService-Info.plist
+*service-account*.json
+firebase-adminsdk*.json
+backend/media/

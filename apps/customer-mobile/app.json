@@ -12,18 +12,24 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.neravu.customer"
+      "bundleIdentifier": "com.neravu.customer",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#1769AA"
       },
-      "package": "com.neravu.customer"
+      "package": "com.neravu.customer",
+      "googleServicesFile": "./google-services.json"
     },
     "extra": {
       "eas": {
         "projectId": "neravu-customer-mobile"
       }
-    }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ]
   }
 }

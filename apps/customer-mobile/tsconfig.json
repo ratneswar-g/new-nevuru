@@ -8,8 +8,20 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@neravu/shared-types": ["../../packages/shared-types/src/index.ts"]
-    }
+      "@neravu/shared-types": [
+        "../../packages/shared-types/src/index.ts"
+      ],
+      "@neravu/api-client": [
+        "../../packages/api-client/src/index.ts"
+      ]
+    },
+    "lib": [
+      "ES2022"
+    ],
+    "noEmit": true
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

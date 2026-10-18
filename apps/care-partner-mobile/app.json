@@ -12,18 +12,24 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.neravu.carepartner"
+      "bundleIdentifier": "com.neravu.carepartner",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#1769AA"
       },
-      "package": "com.neravu.carepartner"
+      "package": "com.neravu.carepartner",
+      "googleServicesFile": "./google-services.json"
     },
     "extra": {
       "eas": {
         "projectId": "neravu-care-partner-mobile"
       }
-    }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ]
   }
 }
